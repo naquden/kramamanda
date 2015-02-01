@@ -21,6 +21,7 @@ import java.util.Random;
 /**
  * Task that takes an url and returns the bitmap it points to.
  * Will catch an exception if url is not pointing to an bitmap.
+ * TODO: extends search to include more images, it currently fetches about 21 images.
  */
 public class ImageDownloader extends AsyncTask<Void, Void, Bitmap> {
 
