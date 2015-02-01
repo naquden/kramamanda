@@ -5,3 +5,5 @@
 .DS_Store
 /build
 .idea/vcs.xml
+.idea/gradle.xml
+.idea/copyright/Backenhof.xml
