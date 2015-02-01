@@ -2,7 +2,9 @@
 <resources>
 
     <string name="app_name">KramAmanda</string>
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+
+    <!-- Notification text -->
+    <string name="notification_content_text">You have a hug waiting! :)</string>
 
 </resources>
