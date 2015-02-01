@@ -36,9 +36,10 @@ public class MainActivity extends ActionBarActivity {
         findViewById(R.id.btn_test_notification).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NotificationService.showNotification(
+                NotificationService.scheduleNotification(
                         MainActivity.this,
-                        NotificationService.NOTIFICATION_ID_HUG_WAITING_ID);
+                        NotificationService.NOTIFICATION_ID_HUG_WAITING_ID,
+                        (System.currentTimeMillis() + 5000));
             }
         });
     }
