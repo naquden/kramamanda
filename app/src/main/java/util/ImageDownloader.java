@@ -16,7 +16,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Random;
 
 /**
  * Task that takes an url and returns the bitmap it points to.
@@ -30,10 +29,20 @@ public class ImageDownloader extends AsyncTask<String, Void, Bitmap> {
      */
     @Override
     protected Bitmap doInBackground(String... url) {
+        KramLog.d("ImageDownloader doInBackground...");
         if (url[0] == null) {
             return null;
         }
         return getImageFromUrlTask(GetRandomUrlTask(url[0]));
+    }
+
+    /**
+     * Called when doInBackground returns.
+     */
+    @Override
+    protected void onPostExecute(Bitmap bitmap) {
+        super.onPostExecute(bitmap);
+        KramLog.d("ImageDownloader done!");
     }
 
     /**
@@ -47,7 +56,7 @@ public class ImageDownloader extends AsyncTask<String, Void, Bitmap> {
             // Get all elements with the img tag
             Elements imagesUrl = doc.getElementsByTag("img");
 
-            return new URL(imagesUrl.get(getRandomInt(1, (imagesUrl.size() - 1))).absUrl("src"));
+            return new URL(imagesUrl.get(KramTools.getRandomInt(1, (imagesUrl.size() - 1))).absUrl("src"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -77,12 +86,5 @@ public class ImageDownloader extends AsyncTask<String, Void, Bitmap> {
         }
 
         return null;
-    }
-
-    /**
-     * Returns a random int between the given min and max.
-     */
-    private int getRandomInt(int min, int max) {
-        return new Random(System.currentTimeMillis()).nextInt((max - min) + 1) + min;
     }
 }
