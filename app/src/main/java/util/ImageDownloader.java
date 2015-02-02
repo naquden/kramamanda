@@ -23,32 +23,31 @@ import java.util.Random;
  * Will catch an exception if url is not pointing to an bitmap.
  * TODO: extends search to include more images, it currently fetches about 21 images.
  */
-public class ImageDownloader extends AsyncTask<Void, Void, Bitmap> {
+public class ImageDownloader extends AsyncTask<String, Void, Bitmap> {
 
     /**
      * Main method run in background. Returns a random bitmap from google when done.
      */
     @Override
-    protected Bitmap doInBackground(Void... params) {
-        return getImageFromUrlTask(GetRandomUrlTask());
+    protected Bitmap doInBackground(String... url) {
+        if (url[0] == null) {
+            return null;
+        }
+        return getImageFromUrlTask(GetRandomUrlTask(url[0]));
     }
 
     /**
      * Returns a random Url to an image from the google search url constant.
      */
-    private URL GetRandomUrlTask() {
+    private URL GetRandomUrlTask(String url) {
         try {
             // Connect to the website and get the html
-            Document doc = Jsoup.connect(KramConstant.GOOGLE_SEARCH_URL).get();
+            Document doc = Jsoup.connect(url).get();
 
             // Get all elements with the img tag
-            Elements img = doc.getElementsByTag("img");
+            Elements imagesUrl = doc.getElementsByTag("img");
 
-            // Randomize an index (except index 0 since that's the google keyboard icon)
-            int randomIndex =
-                    new Random(System.currentTimeMillis()).nextInt((img.size() - 1) + 1) + 1;
-
-            return new URL(img.get(randomIndex).absUrl("src"));
+            return new URL(imagesUrl.get(getRandomInt(1, (imagesUrl.size() - 1))).absUrl("src"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -78,5 +77,12 @@ public class ImageDownloader extends AsyncTask<Void, Void, Bitmap> {
         }
 
         return null;
+    }
+
+    /**
+     * Returns a random int between the given min and max.
+     */
+    private int getRandomInt(int min, int max) {
+        return new Random(System.currentTimeMillis()).nextInt((max - min) + 1) + min;
     }
 }
