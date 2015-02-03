@@ -1,8 +1,31 @@
+<!--
+  Copyright (c) 2015 Backenhof
+  -->
 <resources>
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+        <item name="android:background">@color/app_background</item>
     </style>
 
+    <style name="CardContent">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="CardMessage" parent="Base.TextAppearance.AppCompat.Medium">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:layout_marginStart">@dimen/card_item_message_margin_horizontal</item>
+        <item name="android:layout_marginEnd">@dimen/card_item_message_margin_horizontal</item>
+    </style>
+
+    <style name="CardDate" parent="Base.TextAppearance.AppCompat.Small">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textColor">@color/card_date_foreground</item>
+    </style>
+
+    <style name="CardImageProgress" parent="@android:style/Widget.ProgressBar">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
 </resources>

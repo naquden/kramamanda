@@ -4,45 +4,58 @@
 
 package util;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.os.Environment;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Random;
 
 /**
  * Task that takes an url and returns the bitmap it points to.
  * Will catch an exception if url is not pointing to an bitmap.
  * TODO: extends search to include more images, it currently fetches about 21 images.
  */
-public class ImageDownloader extends AsyncTask<String, Void, Bitmap> {
+public class ImageDownloader extends AsyncTask<String, Void, String> {
+    private Context mContext;
+
+    /**
+     * Constructor.
+     */
+    public ImageDownloader(Context context) {
+        mContext = context;
+    }
 
     /**
      * Main method run in background. Returns a random bitmap from google when done.
      */
     @Override
-    protected Bitmap doInBackground(String... url) {
+    protected String doInBackground(String... url) {
         KramLog.d("ImageDownloader doInBackground...");
         if (url[0] == null) {
             return null;
         }
-        return getImageFromUrlTask(GetRandomUrlTask(url[0]));
+        return downloadAndWrite(GetRandomUrlTask(url[0]));
     }
 
     /**
      * Called when doInBackground returns.
      */
     @Override
-    protected void onPostExecute(Bitmap bitmap) {
-        super.onPostExecute(bitmap);
-        KramLog.d("ImageDownloader done!");
+    protected void onPostExecute(String path) {
+        super.onPostExecute(path);
+        KramLog.d("Downloaded image to " + path);
     }
 
     /**
@@ -56,7 +69,8 @@ public class ImageDownloader extends AsyncTask<String, Void, Bitmap> {
             // Get all elements with the img tag
             Elements imagesUrl = doc.getElementsByTag("img");
 
-            return new URL(imagesUrl.get(KramTools.getRandomInt(1, (imagesUrl.size() - 1))).absUrl("src"));
+            return new URL(
+                    imagesUrl.get(KramTools.getRandomInt(1, (imagesUrl.size() - 1))).absUrl("src"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -64,25 +78,57 @@ public class ImageDownloader extends AsyncTask<String, Void, Bitmap> {
     }
 
     /**
-     * Returns the image for the given url.
+     * Downloads and writes an image to file. Returns the local path to the image file.
      */
-    private Bitmap getImageFromUrlTask(URL url) {
+    private String downloadAndWrite(URL url) {
         if (url == null) {
             return null;
         }
 
+        FileOutputStream fos = null;
+        InputStream inputStream = null;
         try {
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setDoInput(true);
             connection.connect();
 
-            InputStream inputStream = connection.getInputStream();
-            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+            inputStream = connection.getInputStream();
 
-            inputStream.close();
-            return bitmap;
+            int name = new Random().nextInt(999999);
+            String filePath =
+                    mContext.getExternalFilesDir(Environment.DIRECTORY_PICTURES) + "/" + name;
+            fos = new FileOutputStream(new File(filePath));
+
+            byte[] buffer = new byte[8192];
+            int n;
+            while ((n = inputStream.read(buffer)) != -1) {
+                fos.write(buffer, 0, n);
+            }
+
+            return filePath;
         } catch (IOException e) {
-            e.printStackTrace();
+            KramLog.e("Failed to create input/output stream.", e);
+        } finally {
+            if (fos != null) {
+                try {
+                    fos.flush();
+                } catch (IOException e) {
+                    KramLog.e("Failed to flush FileOutputStream", e);
+                } finally {
+                    try {
+                        fos.close();
+                    } catch (IOException e) {
+                        KramLog.e("Failed to close FileOutputStream", e);
+                    }
+                }
+            }
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    KramLog.e("Failed to close InputStream", e);
+                }
+            }
         }
 
         return null;

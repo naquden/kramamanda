@@ -41,9 +41,9 @@ public class KramLog {
     /**
      * Log an error message.
      */
-    public static void e(String message) {
+    public static void e(String message, Exception e) {
         if (KramConstant.DEBUG) {
-            Log.e(TAG, message);
+            Log.e(TAG, message, e);
         }
     }
 }
