@@ -8,7 +8,8 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/card_item_height"
     card_view:cardCornerRadius="@dimen/card_corner_radius"
-    card_view:cardBackgroundColor="@color/card_background">
+    card_view:cardBackgroundColor="@color/card_background"
+    android:layout_marginBottom="@dimen/card_item_margin_bottom">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

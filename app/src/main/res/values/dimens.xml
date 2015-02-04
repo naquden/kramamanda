@@ -6,6 +6,7 @@
     <dimen name="card_padding">8dp</dimen>
     <dimen name="card_corner_radius">4dp</dimen>
     <dimen name="card_item_height">64dp</dimen>
+    <dimen name="card_item_margin_bottom">10dp</dimen>
     <dimen name="card_item_date_width">64dp</dimen>
     <dimen name="card_item_message_margin_horizontal">8dp</dimen>
     <dimen name="dialog_hug_image_width">400dp</dimen>

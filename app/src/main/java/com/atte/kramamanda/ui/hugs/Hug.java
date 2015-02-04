@@ -17,7 +17,7 @@ public class Hug implements Parcelable {
     /**
      * Constructor.
      */
-    public Hug(String imagePath, String message, long date) {
+    public Hug(String message, String imagePath, long date) {
         this.imagePath = imagePath;
         this.message = message;
         this.date = date;
