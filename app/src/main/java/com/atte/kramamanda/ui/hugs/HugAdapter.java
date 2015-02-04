@@ -18,6 +18,14 @@ import java.util.List;
  */
 public class HugAdapter extends RecyclerView.Adapter<HugViewHolder> {
     private List<Hug> mHugs = new ArrayList<Hug>();
+    private OnHugItemClickedListener mHugClickListener;
+
+    /**
+     * Constructor.
+     */
+    public HugAdapter(OnHugItemClickedListener hugClickListener) {
+        mHugClickListener = hugClickListener;
+    }
 
     /**
      * Adds a new hug to the list.
@@ -34,7 +42,7 @@ public class HugAdapter extends RecyclerView.Adapter<HugViewHolder> {
     public HugViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(
                 parent.getContext()).inflate(R.layout.view_hug_item, parent, false);
-        return new HugViewHolder(view);
+        return new HugViewHolder(view, mHugClickListener);
     }
 
     /**

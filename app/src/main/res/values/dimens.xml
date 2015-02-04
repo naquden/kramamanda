@@ -8,4 +8,8 @@
     <dimen name="card_item_height">64dp</dimen>
     <dimen name="card_item_date_width">64dp</dimen>
     <dimen name="card_item_message_margin_horizontal">8dp</dimen>
+    <dimen name="dialog_hug_image_width">400dp</dimen>
+    <dimen name="dialog_hug_image_padding_horizontal">50dp</dimen>
+    <dimen name="banner_height">60dp</dimen>
+    <dimen name="banner_padding_bottom">10dp</dimen>
 </resources>

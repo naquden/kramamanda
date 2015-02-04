@@ -8,9 +8,6 @@ import android.os.AsyncTask;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
-import android.view.View;
-
-import java.util.Calendar;
 
 import util.ImageDownloader;
 import util.KramConstant;
@@ -26,12 +23,18 @@ public class HugListView extends RecyclerView {
      */
     public HugListView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        mAdapter = new HugAdapter();
-        setLayoutManager(new LinearLayoutManager(context));
+    }
+
+    /**
+     * Initializes this list.
+     */
+    public void init(OnHugItemClickedListener hugClickListener) {
+        mAdapter = new HugAdapter(hugClickListener);
+        setLayoutManager(new LinearLayoutManager(getContext()));
         setAdapter(mAdapter);
 
         // Add a temporary image to test this out
-        new ImageDownloader(context) {
+        new ImageDownloader(getContext()) {
             @Override
             protected void onPostExecute(String filePath) {
                 super.onPostExecute(filePath);

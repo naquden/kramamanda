@@ -11,8 +11,7 @@
     card_view:cardBackgroundColor="@color/card_background">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/CardContent">
+        android:layout_height="wrap_content">
         <LinearLayout
             android:id="@+id/hug_item_date_container"
             android:layout_width="@dimen/card_item_date_width"
@@ -41,8 +40,7 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/card_padding"
             android:layout_centerVertical="true"
-            android:layout_toEndOf="@id/hug_item_date_container"
-            style="@style/CardContent">
+            android:layout_toEndOf="@id/hug_item_date_container">
             <TextView
                 android:id="@+id/hug_item_message"
                 android:layout_width="match_parent"
@@ -56,18 +54,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                style="@style/CardContent">
+                android:layout_centerVertical="true">
                 <ImageView
                     android:id="@+id/hug_item_image"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    style="@style/CardContent"/>
+                    android:layout_height="match_parent"/>
                 <ProgressBar
                     android:id="@+id/hug_item_image_progress"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/CardImageProgress"/>
+                    style="@android:style/Widget.ProgressBar"/>
             </FrameLayout>
         </RelativeLayout>
     </RelativeLayout>

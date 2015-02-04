@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright (c) 2015 Backenhof
+  -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/dialog_hug_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingStart="@dimen/dialog_hug_image_padding_horizontal"
+        android:paddingEnd="@dimen/dialog_hug_image_padding_horizontal"/>
+
+    <com.atte.kramamanda.ui.banner.HugBanner
+        android:id="@+id/dialog_hug_banner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|bottom"/>
+</FrameLayout>
