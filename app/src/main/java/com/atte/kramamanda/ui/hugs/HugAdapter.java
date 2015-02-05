@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.atte.kramamanda.R;
-import com.atte.kramamanda.ui.hugs.database.HugDatabaseHelper;
+import com.atte.kramamanda.backend.HugDatabaseHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +28,6 @@ public class HugAdapter extends RecyclerView.Adapter<HugViewHolder> {
      */
     public HugAdapter(Context context, OnHugItemClickedListener hugClickListener) {
         mHugClickListener = hugClickListener;
-        fetchAllHugs(context);
     }
 
     /**
@@ -45,6 +44,14 @@ public class HugAdapter extends RecyclerView.Adapter<HugViewHolder> {
     public void addHugs(List<Hug> hugs) {
         mHugs.addAll(hugs);
         notifyDataSetChanged();
+    }
+
+    /**
+     * Clears the list and loads the data again.
+     */
+    public void refresh(Context context) {
+        mHugs.clear();
+        fetchAllHugs(context);
     }
 
     /**

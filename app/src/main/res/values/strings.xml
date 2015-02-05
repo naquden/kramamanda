@@ -9,4 +9,7 @@
     <!-- Notification text -->
     <string name="notification_content_text">You have a hug waiting! :)</string>
 
+    <!-- Message for the very first hug -->
+    <string name="first_hug_message">This is your very first hug :)</string>
+
 </resources>

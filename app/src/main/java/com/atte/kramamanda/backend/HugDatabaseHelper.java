@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2015 Backenhof
  */
-package com.atte.kramamanda.ui.hugs.database;
+package com.atte.kramamanda.backend;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -9,6 +9,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
+import android.provider.ContactsContract;
 
 import com.atte.kramamanda.ui.hugs.Hug;
 
@@ -34,6 +35,8 @@ public class HugDatabaseHelper extends SQLiteOpenHelper {
 
     private static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + HugEntry.TABLE_HUG;
+
+    private static List<DataChangedListener> mDataChangedListeners;
 
     /**
      * Constructor.
@@ -71,6 +74,7 @@ public class HugDatabaseHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase db = new HugDatabaseHelper(context).getWritableDatabase();
         db.insert(HugEntry.TABLE_HUG, null, values);
+        notifyListeners();
     }
 
     /**
@@ -99,6 +103,43 @@ public class HugDatabaseHelper extends SQLiteOpenHelper {
         }
 
         return result;
+    }
+
+    /**
+     * Adds a listener that will be notified as data is changed.
+     */
+    public static void addDataChangedListener(DataChangedListener listener) {
+        if (mDataChangedListeners == null) {
+            mDataChangedListeners = new ArrayList<DataChangedListener>();
+        }
+
+        if (!mDataChangedListeners.contains(listener)) {
+            mDataChangedListeners.add(listener);
+        }
+    }
+
+    /**
+     * Removes the given listener.
+     */
+    public static void removeDataChangedListener(DataChangedListener listener) {
+        if (mDataChangedListeners == null) {
+            return;
+        }
+
+        mDataChangedListeners.remove(listener);
+    }
+
+    /**
+     * Notifies all listeners that the data has changed.
+     */
+    private static void notifyListeners() {
+        if (mDataChangedListeners == null) {
+            return;
+        }
+
+        for (DataChangedListener listener : mDataChangedListeners) {
+            listener.onDataChanged();
+        }
     }
 
     /**

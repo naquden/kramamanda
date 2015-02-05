@@ -10,11 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.atte.kramamanda.R;
+import com.atte.kramamanda.backend.DataChangedListener;
+import com.atte.kramamanda.backend.HugDatabaseHelper;
 
 /**
  * Shows the Hug list view.
  */
-public class HugListFragment extends Fragment implements OnHugItemClickedListener {
+public class HugListFragment extends Fragment
+        implements OnHugItemClickedListener, DataChangedListener {
     /**
      * Called to create the view for this fragment.
      */
@@ -27,10 +30,44 @@ public class HugListFragment extends Fragment implements OnHugItemClickedListene
     }
 
     /**
+     * Called when this view is resumed.
+     */
+    @Override
+    public void onResume() {
+        super.onResume();
+        HugDatabaseHelper.addDataChangedListener(this);
+        refreshList();
+    }
+
+    /**
+     * Called when this view is paused.
+     */
+    @Override
+    public void onPause() {
+        super.onPause();
+        HugDatabaseHelper.removeDataChangedListener(this);
+    }
+
+    /**
      * Called when the item with the given hug is clicked.
      */
     @Override
     public void onHugClicked(Hug hug) {
         HugDialog.newInstance(hug).show(getFragmentManager(), "hugDialog");
+    }
+
+    /**
+     * Causes the list to refresh.
+     */
+    public void refreshList() {
+        ((HugListView)getView().findViewById(R.id.hug_list_view)).refresh();
+    }
+
+    /**
+     * Called when the data in the database has changed somehow.
+     */
+    @Override
+    public void onDataChanged() {
+        refreshList();
     }
 }
