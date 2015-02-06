@@ -22,6 +22,7 @@ import java.util.Random;
 
 import util.ImageDownloader;
 import util.KramConstant;
+import util.KramLog;
 import util.QuoteDownloader;
 
 /**
@@ -39,12 +40,14 @@ public class HugRequestService extends BroadcastReceiver{
     @Override
     public void onReceive(final Context context, Intent intent) {
         String action = intent.getAction();
+        KramLog.d("received action:" + action);
         if (action == null || !action.equals(KramConstant.ACTION_REQUEST_HUG)) {
             return;
         }
 
         if (new Random().nextFloat() > HUG_REQUEST_SUCCESS_CHANCE) {
             // No luck today, have to wait for tomorrow
+            KramLog.i("No hug given this time...");
             return;
         }
 
