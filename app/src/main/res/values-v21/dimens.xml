@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright (c) 2015 Backenhof
+  -->
+<resources>
+    <dimen name="card_corner_radius">4dp</dimen>
+</resources>

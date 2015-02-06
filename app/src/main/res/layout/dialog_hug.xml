@@ -9,10 +9,11 @@
 
     <ImageView
         android:id="@+id/dialog_hug_image"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:paddingStart="@dimen/dialog_hug_image_padding_horizontal"
-        android:paddingEnd="@dimen/dialog_hug_image_padding_horizontal"/>
+        android:paddingEnd="@dimen/dialog_hug_image_padding_horizontal"
+        android:layout_gravity="center"/>
 
     <com.atte.kramamanda.ui.banner.HugBanner
         android:id="@+id/dialog_hug_banner"

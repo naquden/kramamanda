@@ -1,16 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--
   Copyright (c) 2015 Backenhof
   -->
 <resources>
-    <dimen name="app_padding">16dp</dimen>
+    <dimen name="card_list_padding_horizontal">16dp</dimen>
     <dimen name="card_padding">8dp</dimen>
-    <dimen name="card_corner_radius">4dp</dimen>
-    <dimen name="card_item_height">64dp</dimen>
-    <dimen name="card_item_margin_bottom">10dp</dimen>
+    <dimen name="card_corner_radius">0dp</dimen>
+    <dimen name="card_item_min_height">64dp</dimen>
+    <dimen name="card_item_margin_top">10dp</dimen>
     <dimen name="card_item_date_width">64dp</dimen>
     <dimen name="card_item_message_margin_horizontal">8dp</dimen>
-    <dimen name="dialog_hug_image_width">400dp</dimen>
     <dimen name="dialog_hug_image_padding_horizontal">50dp</dimen>
     <dimen name="banner_height">60dp</dimen>
     <dimen name="banner_padding_bottom">10dp</dimen>
+    <dimen name="banner_text_margin">2dp</dimen>
 </resources>

@@ -6,6 +6,7 @@ package com.atte.kramamanda.ui.hugs;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.graphics.Bitmap;
+import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -47,9 +48,8 @@ public class HugDialog extends DialogFragment {
         final View view = inflater.inflate(R.layout.dialog_hug, container, false);
         final ImageView imageView = (ImageView) view.findViewById(R.id.dialog_hug_image);
         Hug hug = getArguments().getParcelable(ARGS_HUG);
-        new ImageLoader(
-                hug.imagePath,
-                (int) getResources().getDimension(R.dimen.dialog_hug_image_width)) {
+        int imageWidth = getImageWidth();
+        new ImageLoader(hug.imagePath, imageWidth) {
             @Override
             protected void onPostExecute(Bitmap bitmap) {
                 super.onPostExecute(bitmap);
@@ -60,6 +60,7 @@ public class HugDialog extends DialogFragment {
         };
 
         HugBanner banner = (HugBanner) view.findViewById(R.id.dialog_hug_banner);
+        banner.init(imageWidth);
         banner.setMessage(hug.message);
         banner.setDate(hug.date);
         return view;
@@ -75,5 +76,14 @@ public class HugDialog extends DialogFragment {
         dialog.getWindow().setBackgroundDrawable(
                 new ColorDrawable(android.graphics.Color.TRANSPARENT));
         return dialog;
+    }
+
+    /**
+     * Returns the image width, which is 2/3 of the width or height of the display.
+     */
+    private int getImageWidth() {
+        Point size = new Point();
+        getActivity().getWindowManager().getDefaultDisplay().getSize(size);
+        return (int) (Math.min(size.x, size.y) * 0.67f);
     }
 }

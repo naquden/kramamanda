@@ -20,9 +20,17 @@
     <style name="BannerMessage" parent="Base.TextAppearance.AppCompat.Medium">
         <item name="android:fontFamily">sans-serif-light</item>
         <item name="android:textColor">@color/banner_message_foreground</item>
+        <item name="android:layout_marginBottom">@dimen/banner_text_margin</item>
+        <item name="android:layout_marginStart">@dimen/banner_text_margin</item>
+        <item name="android:layout_marginEnd">@dimen/banner_text_margin</item>
+        <item name="android:gravity">center</item>
     </style>
 
     <style name="BannerDate" parent="CardDate">
         <item name="android:textColor">@color/banner_date_foreground</item>
+        <item name="android:layout_marginTop">@dimen/banner_text_margin</item>
+        <item name="android:layout_marginStart">@dimen/banner_text_margin</item>
+        <item name="android:layout_marginEnd">@dimen/banner_text_margin</item>
+        <item name="android:gravity">center</item>
     </style>
 </resources>

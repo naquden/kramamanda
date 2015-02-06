@@ -66,11 +66,6 @@ public class MainActivity extends Activity {
                         filePath,
                         System.currentTimeMillis());
                 HugDatabaseHelper.insertHug(MainActivity.this, hug);
-                HugListFragment hugFragment = (HugListFragment)
-                        getFragmentManager().findFragmentByTag(TAG_MONTH_FRAGMENT);
-                if (hugFragment != null) {
-                    hugFragment.refreshList();
-                }
             }
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, KramConstant.GOOGLE_SEARCH_URL);
     }

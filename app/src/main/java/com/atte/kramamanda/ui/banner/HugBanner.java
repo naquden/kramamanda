@@ -13,6 +13,7 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -29,7 +30,7 @@ public class HugBanner extends LinearLayout {
 
     // These are values that will be multiplied to the main color to create the different shadings
     private static final float COLOR_SHADOW_FACTOR = 0.3f;
-    private static final float COLOR_EDGE_FACTOR = 0.7f;
+    private static final float COLOR_EDGE_FACTOR = 0.6f;
 
     private Paint mPaint;
     private int mMainColor;
@@ -38,6 +39,7 @@ public class HugBanner extends LinearLayout {
     private Path mEdgePart;
     private Path mShadowPart;
     private RectF mMainPart;
+    private int mImageWidth;
 
     /**
      * Constructor.
@@ -47,11 +49,22 @@ public class HugBanner extends LinearLayout {
         LayoutInflater.from(context).inflate(R.layout.view_hug_banner, this, true);
         setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
         setMinimumHeight((int) getResources().getDimension(R.dimen.banner_height));
-        setPadding(0, 0, 0, (int) getResources().getDimension(R.dimen.banner_padding_bottom));
+        int paddingBottom = (int) getResources().getDimension(R.dimen.banner_padding_bottom);
+        setPadding(0, 0, 0, paddingBottom);
         setGravity(Gravity.CENTER_HORIZONTAL);
         setOrientation(VERTICAL);
         setWillNotDraw(false);
         initDrawingValues();
+    }
+
+    /**
+     * Sets the width of the image this is wrapping. This is required.
+     */
+    public void init(int imageWidth) {
+        mImageWidth = imageWidth;
+        LayoutParams textLayoutParams = new LayoutParams(imageWidth, LayoutParams.WRAP_CONTENT);
+        findViewById(R.id.banner_message).setLayoutParams(textLayoutParams);
+        findViewById(R.id.banner_date).setLayoutParams(textLayoutParams);
     }
 
     /**
@@ -143,25 +156,27 @@ public class HugBanner extends LinearLayout {
         float edgeWidth = getResources().getDimension(R.dimen.dialog_hug_image_padding_horizontal);
         float mainMarginBottom = getResources().getDimension(R.dimen.banner_padding_bottom);
 
+        // The edge shape
+        float edgeRight = (getWidth() - mImageWidth) / 2.0f;
+        float edgeLeft = edgeRight - edgeWidth;
+        mEdgePart = new Path();
+        mEdgePart.moveTo(edgeLeft, mainMarginBottom);
+        mEdgePart.lineTo(edgeLeft + edgeWidth/ 2.0f, getHeight() * 0.6f);
+        mEdgePart.lineTo(edgeLeft, getHeight());
+        mEdgePart.lineTo(edgeRight, getHeight());
+        mEdgePart.lineTo(edgeRight, mainMarginBottom);
+        mEdgePart.lineTo(edgeLeft, mainMarginBottom);
+
         // The main part
-        float mainLeft = edgeWidth * 0.8f;
+        float mainLeft = edgeRight - edgeWidth * 0.2f;
         float mainBottom = getHeight() - mainMarginBottom;
         mMainPart = new RectF(mainLeft, 0.0f, getWidth() - mainLeft, mainBottom);
-
-        // The edge shape
-        mEdgePart = new Path();
-        mEdgePart.moveTo(0.0f, mainMarginBottom);
-        mEdgePart.lineTo(edgeWidth * 0.5f, getHeight() * 0.6f);
-        mEdgePart.lineTo(0.0f, getHeight());
-        mEdgePart.lineTo(edgeWidth, getHeight());
-        mEdgePart.lineTo(edgeWidth, mainMarginBottom);
-        mEdgePart.lineTo(0.0f, mainMarginBottom);
 
         // Shadow part
         mShadowPart = new Path();
         mShadowPart.moveTo(mainLeft, mainBottom);
-        mShadowPart.lineTo(edgeWidth, getHeight());
-        mShadowPart.lineTo(edgeWidth, mainBottom);
+        mShadowPart.lineTo(edgeRight, getHeight());
+        mShadowPart.lineTo(edgeRight, mainBottom);
         mShadowPart.lineTo(mainLeft, mainBottom);
     }
 }

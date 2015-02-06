@@ -39,7 +39,7 @@ public class ImageLoader extends AsyncTask<String, Void, Bitmap> {
         }
 
         // Scale bitmap to fit requested width. Keep aspect ratio
-        float scaleFactor = mRequestedWidth / bitmap.getWidth();
+        float scaleFactor = mRequestedWidth / (float)bitmap.getWidth();
         return Bitmap.createScaledBitmap(
                 bitmap, mRequestedWidth, (int) (bitmap.getHeight() * scaleFactor), true);
     }
