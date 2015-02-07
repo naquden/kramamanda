@@ -3,6 +3,7 @@
  */
 package com.atte.kramamanda.ui.hugs;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
@@ -48,7 +49,7 @@ public class HugViewHolder extends RecyclerView.ViewHolder implements View.OnCli
     /**
      * Binds the data of the given Hug to the views of this holder.
      */
-    public void bindHug(Hug hug) {
+    public void bindHug(Context context, Hug hug) {
         mHug = hug;
         mMessageView.setText(hug.message);
         Calendar calendar = Calendar.getInstance();
@@ -59,7 +60,9 @@ public class HugViewHolder extends RecyclerView.ViewHolder implements View.OnCli
         mImageView.setVisibility(View.GONE);
         mImageProgressView.setVisibility(View.VISIBLE);
 
-        new ImageLoader(hug.imagePath) {
+        new ImageLoader(
+                hug.imagePath,
+                (int) context.getResources().getDimension(R.dimen.card_item_image_width)) {
             @Override
             protected void onPostExecute(Bitmap bitmap) {
                 super.onPostExecute(bitmap);

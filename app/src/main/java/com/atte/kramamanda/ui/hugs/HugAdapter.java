@@ -22,11 +22,13 @@ import java.util.List;
 public class HugAdapter extends RecyclerView.Adapter<HugViewHolder> {
     private List<Hug> mHugs = new ArrayList<Hug>();
     private OnHugItemClickedListener mHugClickListener;
+    private Context mContext;
 
     /**
      * Constructor.
      */
     public HugAdapter(Context context, OnHugItemClickedListener hugClickListener) {
+        mContext = context;
         mHugClickListener = hugClickListener;
     }
 
@@ -69,7 +71,7 @@ public class HugAdapter extends RecyclerView.Adapter<HugViewHolder> {
      */
     @Override
     public void onBindViewHolder(HugViewHolder holder, int position) {
-        holder.bindHug(mHugs.get(position));
+        holder.bindHug(mContext, mHugs.get(position));
     }
 
     /**

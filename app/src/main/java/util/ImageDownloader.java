@@ -5,8 +5,6 @@
 package util;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Environment;
 
@@ -19,8 +17,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Random;
+
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.stream.StreamResult;
 
 /**
  * Task that takes an url and returns the bitmap it points to.
@@ -69,12 +73,20 @@ public class ImageDownloader extends AsyncTask<String, Void, String> {
             // Get all elements with the img tag
             Elements imagesUrl = doc.getElementsByTag("img");
 
-            return new URL(
+            return getSourceImageUrl(
                     imagesUrl.get(KramTools.getRandomInt(1, (imagesUrl.size() - 1))).absUrl("src"));
         } catch (IOException e) {
-            e.printStackTrace();
+            KramLog.e("Could not fetch image url", e);
         }
         return null;
+    }
+
+    /**
+     * Returns the url to the source image of the given URL.
+     */
+    private URL getSourceImageUrl(String path) throws MalformedURLException {
+        String sourcePath = path.substring(0, path.indexOf('&'));
+        return new URL(sourcePath);
     }
 
     /**
