@@ -6,10 +6,12 @@ package com.atte.kramamanda.ui.banner;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.LinearGradient;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
+import android.graphics.Shader;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -28,16 +30,18 @@ public class HugBanner extends LinearLayout {
     private static final String DAY_FORMAT = "MMMM d yyyy";
 
     // These are values that will be multiplied to the main color to create the different shadings
-    private static final float COLOR_SHADOW_FACTOR = 0.3f;
+    private static final float COLOR_FOLD_FACTOR = 0.3f;
     private static final float COLOR_EDGE_FACTOR = 0.6f;
 
     private Paint mPaint;
     private int mMainColor;
     private int mEdgeColor;
-    private int mShadowColor;
+    private int mFoldColor;
     private Path mEdgePart;
-    private Path mShadowPart;
+    private Path mFoldPart;
     private RectF mMainPart;
+    private Shader mShadowShader;
+    private RectF mShadowPart;
     private int mImageWidth;
 
     /**
@@ -96,37 +100,43 @@ public class HugBanner extends LinearLayout {
      */
     @Override
     protected void onDraw(Canvas canvas) {
+        mPaint.setShader(null);
+
         // Draw left edge
         mPaint.setColor(mEdgeColor);
         canvas.drawPath(mEdgePart, mPaint);
 
-        // Draw left shadow part
-        mPaint.setColor(mShadowColor);
-        canvas.drawPath(mShadowPart, mPaint);
+        // Draw left fold part
+        mPaint.setColor(mFoldColor);
+        canvas.drawPath(mFoldPart, mPaint);
 
-        // Mirror edge and shadow parts
+        // Mirror edge and fold parts
         Matrix transformation = new Matrix();
         transformation.setScale(-1.0f, 1.0f);
         Path rightEdge = new Path(mEdgePart);
         rightEdge.transform(transformation);
-        Path rightShadow = new Path(mShadowPart);
-        rightShadow.transform(transformation);
+        Path rightFold = new Path(mFoldPart);
+        rightFold.transform(transformation);
         transformation = new Matrix();
         transformation.setTranslate(getWidth(), 0.0f);
         rightEdge.transform(transformation);
-        rightShadow.transform(transformation);
+        rightFold.transform(transformation);
 
         // Draw right edge
         mPaint.setColor(mEdgeColor);
         canvas.drawPath(rightEdge, mPaint);
 
-        // Draw right shadow part
-        mPaint.setColor(mShadowColor);
-        canvas.drawPath(rightShadow, mPaint);
+        // Draw right fold part
+        mPaint.setColor(mFoldColor);
+        canvas.drawPath(rightFold, mPaint);
 
         // Draw main part
         mPaint.setColor(mMainColor);
         canvas.drawRect(mMainPart, mPaint);
+
+        // Draw shadow below main part
+        mPaint.setShader(mShadowShader);
+        canvas.drawRect(mShadowPart, mPaint);
     }
 
     /**
@@ -138,10 +148,10 @@ public class HugBanner extends LinearLayout {
                 (int)(Color.red(mMainColor) * COLOR_EDGE_FACTOR),
                 (int)(Color.green(mMainColor) * COLOR_EDGE_FACTOR),
                 (int)(Color.blue(mMainColor) * COLOR_EDGE_FACTOR));
-        mShadowColor = Color.rgb(
-                (int)(Color.red(mMainColor) * COLOR_SHADOW_FACTOR),
-                (int)(Color.green(mMainColor) * COLOR_SHADOW_FACTOR),
-                (int)(Color.blue(mMainColor) * COLOR_SHADOW_FACTOR));
+        mFoldColor = Color.rgb(
+                (int)(Color.red(mMainColor) * COLOR_FOLD_FACTOR),
+                (int)(Color.green(mMainColor) * COLOR_FOLD_FACTOR),
+                (int)(Color.blue(mMainColor) * COLOR_FOLD_FACTOR));
 
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
@@ -171,11 +181,22 @@ public class HugBanner extends LinearLayout {
         float mainBottom = getHeight() - mainMarginBottom;
         mMainPart = new RectF(mainLeft, 0.0f, getWidth() - mainLeft, mainBottom);
 
-        // Shadow part
-        mShadowPart = new Path();
-        mShadowPart.moveTo(mainLeft, mainBottom);
-        mShadowPart.lineTo(edgeRight, getHeight());
-        mShadowPart.lineTo(edgeRight, mainBottom);
-        mShadowPart.lineTo(mainLeft, mainBottom);
+        // Fold part
+        mFoldPart = new Path();
+        mFoldPart.moveTo(mainLeft, mainBottom);
+        mFoldPart.lineTo(edgeRight, getHeight());
+        mFoldPart.lineTo(edgeRight, mainBottom);
+        mFoldPart.lineTo(mainLeft, mainBottom);
+
+        // Shadow shader below main part
+        mShadowPart = new RectF(edgeRight, mainBottom, getWidth() - edgeRight, getHeight());
+        mShadowShader = new LinearGradient(
+                0,
+                mShadowPart.top,
+                0,
+                mShadowPart.bottom,
+                0x99000000,
+                0x00000000,
+                Shader.TileMode.CLAMP);
     }
 }
