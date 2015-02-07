@@ -5,7 +5,6 @@ package com.atte.kramamanda.ui.hugs;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;

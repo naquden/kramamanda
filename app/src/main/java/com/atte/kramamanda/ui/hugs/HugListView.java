@@ -4,7 +4,6 @@
 package com.atte.kramamanda.ui.hugs;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;

@@ -13,7 +13,7 @@ import com.atte.kramamanda.R;
  * NOTE:
  * This implementation only works with "http://www.brainyquote.com/quotes/keywords/good_day.html"
  */
-public class QuoteDownloader extends AsyncTask<String, Void, String> {
+public class QuoteDownloader extends AsyncTask<Void, Void, String> {
 
     private Resources mResources;
 
@@ -28,7 +28,7 @@ public class QuoteDownloader extends AsyncTask<String, Void, String> {
      * Main method run in background. Returns a random quote from the QUOTE_URL webpage.
      */
     @Override
-    protected String doInBackground(String... url) {
+    protected String doInBackground(Void... params) {
         KramLog.d("QuoteDownloader doInBackground...");
 
         String[] texts = mResources.getStringArray(R.array.hug_texts);

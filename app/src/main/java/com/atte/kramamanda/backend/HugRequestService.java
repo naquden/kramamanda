@@ -69,7 +69,7 @@ public class HugRequestService extends BroadcastReceiver{
                 mNewHugMessage = s;
                 tryToSaveHugAndNotifyUser(context);
             }
-        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, KramConstant.QUOTES_URL);
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     /**
