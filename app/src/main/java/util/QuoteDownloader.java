@@ -3,17 +3,10 @@
  */
 package util;
 
+import android.content.res.Resources;
 import android.os.AsyncTask;
-import android.util.Log;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.nodes.Node;
-import org.jsoup.nodes.TextNode;
-import org.jsoup.select.Elements;
-
-import java.io.IOException;
+import com.atte.kramamanda.R;
 
 /**
  * Class handling the download for quotes from the web.
@@ -22,34 +15,25 @@ import java.io.IOException;
  */
 public class QuoteDownloader extends AsyncTask<String, Void, String> {
 
+    private Resources mResources;
+
+    /**
+     * Constructor
+     */
+    public QuoteDownloader(Resources resources) {
+        mResources = resources;
+    }
+
     /**
      * Main method run in background. Returns a random quote from the QUOTE_URL webpage.
      */
     @Override
     protected String doInBackground(String... url) {
         KramLog.d("QuoteDownloader doInBackground...");
-        // Connect to the website and get the html
-        try {
-            Document doc = Jsoup.connect(url[0]).get();
 
-            Elements quotes = doc.getElementsByClass("bqQuoteLink");
+        String[] texts = mResources.getStringArray(R.array.hug_texts);
 
-            int randomIndex = KramTools.getRandomInt(0, quotes.size() - 1);
-
-            Element element = quotes.get(randomIndex);
-            for (Node firstNode : element.childNodes()) {
-                for (Node secondNode : firstNode.childNodes()) {
-                    if (secondNode instanceof TextNode) {
-                        KramLog.i("Found text:" + ((TextNode) secondNode).text());
-                        return ((TextNode) secondNode).text();
-                    }
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return null;
+        return texts[KramTools.getRandomInt(0,texts.length-1)];
     }
 
     /**

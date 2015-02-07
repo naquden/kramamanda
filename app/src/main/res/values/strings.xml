@@ -7,9 +7,20 @@
     <string name="app_name">Manda</string>
 
     <!-- Notification text -->
-    <string name="notification_content_text">You have a hug waiting! :)</string>
+    <string name="notification_content_text">Heey, I would like to give you a hug :)</string>
 
     <!-- Message for the very first hug -->
     <string name="first_hug_message">This is your very first hug :)</string>
 
+    <!-- Hug texts -->
+    <string-array name="hug_texts">
+        <item>This day will be a good day</item>
+        <item>There is no bad days, but this day will be hard to live up to :)</item>
+        <item>Happy Manda day!</item>
+        <item>Have a great day</item>
+        <item>This day is your day to shine</item>
+        <item>Try something different today, trust the hug ;)</item>
+        <item>I thought you could use a hug</item>
+        <item>There is no place like home, and it will still be there so get out on an adventure</item>
+    </string-array>
 </resources>

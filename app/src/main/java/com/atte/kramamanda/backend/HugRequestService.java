@@ -62,7 +62,7 @@ public class HugRequestService extends BroadcastReceiver{
             }
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, KramConstant.GOOGLE_SEARCH_URL);
 
-        new QuoteDownloader() {
+        new QuoteDownloader(context.getResources()) {
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
