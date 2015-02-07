@@ -37,8 +37,6 @@ public class MainActivity extends Activity {
             KramPreferences.putHasStartedAppBefore(this);
         }
 
-        requestFirstHug();
-
         setContentView(R.layout.activity_main);
         initMonthView(savedInstanceState);
     }
