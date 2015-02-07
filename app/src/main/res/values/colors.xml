@@ -3,11 +3,12 @@
   Copyright (c) 2015 Backenhof
   -->
 <resources>
-    <color name="app_background">#d1d1d1</color>
     <color name="card_background">#fff</color>
-    <color name="card_date_background">#f0a144</color>
+    <color name="card_date_background">#f088ff</color>
     <color name="card_date_foreground">#964C04</color>
     <color name="banner_color">#cf2d2d</color>
     <color name="banner_message_foreground">#fff</color>
     <color name="banner_date_foreground">#fda8a8</color>
+    <color name="background_start">#fad8ff</color>
+    <color name="background_end">#ffc9dc</color>
 </resources>
