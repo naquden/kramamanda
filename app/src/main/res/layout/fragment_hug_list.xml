@@ -9,5 +9,6 @@
     <com.atte.kramamanda.ui.hugs.HugListView
         android:id="@+id/hug_list_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:background="@drawable/hug_list_background"/>
 </FrameLayout>
