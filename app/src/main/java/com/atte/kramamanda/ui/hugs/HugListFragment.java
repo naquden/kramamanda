@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import com.atte.kramamanda.R;
 import com.atte.kramamanda.backend.DataChangedListener;
 import com.atte.kramamanda.backend.HugDatabaseHelper;
+import com.atte.kramamanda.ui.ParticleSystemWrapper;
 
 /**
  * Shows the Hug list view.
@@ -54,13 +55,17 @@ public class HugListFragment extends Fragment
     @Override
     public void onHugClicked(Hug hug) {
         HugDialog.newInstance(hug).show(getFragmentManager(), "hugDialog");
+        ParticleSystemWrapper.explodeFromView(getActivity(), getView());
     }
 
     /**
      * Causes the list to refresh.
      */
     public void refreshList() {
-        ((HugListView)getView().findViewById(R.id.hug_list_view)).refresh();
+        View view = getView();
+        if (view != null) {
+            ((HugListView)view.findViewById(R.id.hug_list_view)).refresh();
+        }
     }
 
     /**

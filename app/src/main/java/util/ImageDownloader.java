@@ -21,11 +21,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Random;
 
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.stream.StreamResult;
-
 /**
  * Task that takes an url and returns the bitmap it points to.
  * Will catch an exception if url is not pointing to an bitmap.

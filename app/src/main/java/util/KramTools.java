@@ -3,6 +3,10 @@
  */
 package util;
 
+import com.atte.kramamanda.R;
+
+import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -23,18 +27,29 @@ public class KramTools {
         return mRandom.nextInt((max - min) + 1) + min;
     }
 
-    /**
-     * Returns a random page in the QUOTE_URL.
-     */
-    public static String getRandomQuoteUrl() {
-        int page = getRandomInt(1, 3);  // The number of pages could perhaps be fetched from html
-        StringBuilder sb = new StringBuilder();
-        sb.append(KramConstant.QUOTES_URL);
-        sb.append("_");
-        sb.append(page);
-        sb.append(".html");
+    public static int getRandomParticleDrawable() {
+        ArrayList<Integer> drawableIds = getAllParticleDrawableResId();
+        int index = getRandomInt(0, drawableIds.size() - 1);
+        return drawableIds.get(index);
+    }
 
-        KramLog.i("getRandomQuoteUrl: " + sb.toString());
-        return sb.toString();
+    private static ArrayList<Integer> getAllParticleDrawableResId() {
+        final R.drawable drawableResources = new R.drawable();
+        final Class<R.drawable> c = R.drawable.class;
+        final Field[] fields = c.getDeclaredFields();
+        ArrayList<Integer> resIdList = new ArrayList<>();
+
+        for (int i = 0, max = fields.length; i < max; i++) {
+            try {
+                if (fields[i].getName().contains("particle_")) {
+                    resIdList.add(fields[i].getInt(drawableResources));
+                }
+            } catch (Exception e) {
+                // In case of exception add one default icon
+                resIdList.add(R.drawable.particle_heart);
+                continue;
+            }
+        }
+        return resIdList;
     }
 }
