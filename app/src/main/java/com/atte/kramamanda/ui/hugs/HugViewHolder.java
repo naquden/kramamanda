@@ -21,7 +21,7 @@ import util.ImageLoader;
 /**
  * ViewHolder for showing Hug items.s
  */
-public class HugViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+public class HugViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
     private static final String DAY_FORMAT = "d MMM";
     private TextView mMessageView;
     private ImageView mImageView;
@@ -43,6 +43,7 @@ public class HugViewHolder extends RecyclerView.ViewHolder implements View.OnCli
         mDateYearView = (TextView) itemView.findViewById(R.id.hug_item_date_year);
         mHugClickListener = listener;
         itemView.setOnClickListener(this);
+        itemView.setOnLongClickListener(this);
     }
 
     /**
@@ -83,5 +84,16 @@ public class HugViewHolder extends RecyclerView.ViewHolder implements View.OnCli
         if (mHugClickListener != null) {
             mHugClickListener.onHugClicked(mHug);
         }
+    }
+
+    /**
+     * Called when this view holder is long clicked.
+     */
+    @Override
+    public boolean onLongClick(View v) {
+        if (mHugClickListener != null) {
+            mHugClickListener.onHugLongClicked(mHug);
+        }
+        return false;
     }
 }

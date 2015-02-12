@@ -13,6 +13,7 @@ import com.atte.kramamanda.R;
 import com.atte.kramamanda.backend.DataChangedListener;
 import com.atte.kramamanda.backend.HugDatabaseHelper;
 import com.atte.kramamanda.ui.ParticleSystemWrapper;
+import com.atte.kramamanda.ui.dialogs.HugItemContextDialog;
 
 /**
  * Shows the Hug list view.
@@ -56,6 +57,15 @@ public class HugListFragment extends Fragment
     public void onHugClicked(Hug hug) {
         HugDialog.newInstance(hug).show(getFragmentManager(), "hugDialog");
         ParticleSystemWrapper.explodeFromView(getActivity(), getView());
+    }
+
+    /**
+     * Called when the item with the given hug is long clicked.
+     * TODO: Replace showing the dialog with a swipe gesture instead.
+     */
+    @Override
+    public void onHugLongClicked(Hug hug) {
+        HugItemContextDialog.newInstance(hug).show(getFragmentManager(), "hugMenu");
     }
 
     /**

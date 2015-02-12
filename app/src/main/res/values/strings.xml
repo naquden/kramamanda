@@ -12,6 +12,9 @@
     <!-- Message for the very first hug -->
     <string name="first_hug_message">This is your very first hug :)</string>
 
+    <!-- Text for the delete button -->
+    <string name="dialog_hug_menu_delete_text">Delete</string>
+
     <!-- Hug texts -->
     <string-array name="hug_texts">
         <item>This day will be a good day</item>

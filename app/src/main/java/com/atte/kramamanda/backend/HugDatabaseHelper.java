@@ -12,8 +12,11 @@ import android.provider.BaseColumns;
 
 import com.atte.kramamanda.ui.hugs.Hug;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import util.KramLog;
 
 /**
  * Provides us with method for interacting with the database.
@@ -74,6 +77,23 @@ public class HugDatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = new HugDatabaseHelper(context).getWritableDatabase();
         db.insert(HugEntry.TABLE_HUG, null, values);
         notifyListeners();
+    }
+
+    /**
+     * Deletes a hug from the database and storage.
+     */
+    public static boolean deleteHug(Context context, Hug hug) {
+        SQLiteDatabase db = new HugDatabaseHelper(context).getWritableDatabase();
+        String[] whereArgs = new String[] { String.valueOf(hug.imagePath) };
+        if (db.delete(HugEntry.TABLE_HUG, HugEntry.COLUMN_IMAGEPATH + "=?", whereArgs) > 0) {
+            notifyListeners();
+            File file = new File(hug.imagePath);
+            file.delete();
+            KramLog.d("deleted image from:" + hug.imagePath);
+            return true;
+        }
+
+        return false;
     }
 
     /**

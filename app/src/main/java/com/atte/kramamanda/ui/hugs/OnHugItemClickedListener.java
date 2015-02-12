@@ -11,4 +11,9 @@ public interface OnHugItemClickedListener {
      * Called when the item with the given hug is clicked.
      */
     public void onHugClicked(Hug hug);
+
+    /**
+     * Called when the item with the given hug is long clicked.
+     */
+    public void onHugLongClicked(Hug hug);
 }
