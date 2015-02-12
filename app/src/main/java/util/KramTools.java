@@ -3,6 +3,10 @@
  */
 package util;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+
 import com.atte.kramamanda.R;
 
 import java.lang.reflect.Field;
@@ -27,12 +31,28 @@ public class KramTools {
         return mRandom.nextInt((max - min) + 1) + min;
     }
 
+    /**
+     * Returns true if there's an internet connection available.
+     */
+    public static boolean isNetworkAvailable(Context context) {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
+    /**
+     * Returns a random particle drawable.
+     */
     public static int getRandomParticleDrawable() {
         ArrayList<Integer> drawableIds = getAllParticleDrawableResId();
         int index = getRandomInt(0, drawableIds.size() - 1);
         return drawableIds.get(index);
     }
 
+    /**
+     * Returns all drawable that begins which file name begins with "particle".
+     */
     private static ArrayList<Integer> getAllParticleDrawableResId() {
         final R.drawable drawableResources = new R.drawable();
         final Class<R.drawable> c = R.drawable.class;
@@ -41,7 +61,7 @@ public class KramTools {
 
         for (int i = 0, max = fields.length; i < max; i++) {
             try {
-                if (fields[i].getName().contains("particle_")) {
+                if (fields[i].getName().substring(0, 8).equals("particle")) {
                     resIdList.add(fields[i].getInt(drawableResources));
                 }
             } catch (Exception e) {

@@ -23,6 +23,7 @@ import java.util.Random;
 import util.ImageDownloader;
 import util.KramConstant;
 import util.KramLog;
+import util.KramTools;
 import util.QuoteDownloader;
 
 /**
@@ -44,7 +45,10 @@ public class HugRequestService extends BroadcastReceiver{
         if (action == null || !action.equals(KramConstant.ACTION_REQUEST_HUG)) {
             return;
         }
-
+        if (!KramTools.isNetworkAvailable(context)) {
+            KramLog.d("No internet connection available, exiting...");
+            return;
+        }
         if (new Random().nextFloat() > HUG_REQUEST_SUCCESS_CHANCE) {
             // No luck today, have to wait for tomorrow
             KramLog.i("No hug given this time...");
